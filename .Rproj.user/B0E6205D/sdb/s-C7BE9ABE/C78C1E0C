@@ -1,0 +1,18 @@
+{
+    "contents" : "---\ntitle: \"Regression Models Course Project\"\nauthor: \"aps2201\"\ndate: \"February 13, 2016\"\noutput: html_document\n---\n\n```{r,include=FALSE}\nsource(\"courseproject.R\")\n```\n\n#Overview\nIn this project we want to see two things:\n\n* Is an automatic or manual transmission better for MPG?\n* The MPG difference between automatic and manual transmissions\n\nFirst, we need to look at the `mtcars` dataset\n\n```{r}\nsummary(mtcars)\n```\n\nThe vs and am are not supposed to be numeric, since they are actually codes for V/S and automatic/manual respectively.\n\nLets fix that\n\n```{r}\nmtcars$vs=sub(\"0\",\"V\",mtcars$vs)\nmtcars$vs=sub(\"1\",\"S\",mtcars$vs)\n\nmtcars$am=sub(\"0\",\"automatic\",mtcars$am)\nmtcars$am=sub(\"1\",\"manual\",mtcars$am)\n\nmtcars$vs=as.factor(mtcars$vs)\nmtcars$am=as.factor(mtcars$am)\n```\n\n```{r}\nsummary(mtcars)\n```\n\nok, now we need to answer the question *Is an automatic or manual transmission better for MPG?*, to do this we can explore this by plotting the mpg with the transmission type.\n\n```{r}\namformpg=ggplot(aes(x=am,y=mpg),data=mtcars)+\n  geom_boxplot(aes(fill=am))+\n  xlab(\"automatic/manual\")\namformpg\n```\n\nNow we can see that from miles per gallon (mpg) automatic seems to be the more gas guzzling compared to manual. Hence, manual is better compared to automatic regarding mpg.\n\n```{r}\n#mtcars$vs=sub(\"V\",\"0\",mtcars$vs)\n#mtcars$vs=sub(\"S\",\"1\",mtcars$vs)\nmtcars$vs=as.numeric(mtcars$vs)\n\n#mtcars$am=sub(\"automatic\",\"0\",mtcars$am)\n#mtcars$am=sub(\"manual\",\"1\",mtcars$am)\nmtcars$am=as.numeric(mtcars$am)\n\ncor(mtcars)\n```\n\n",
+    "created" : 1455328918732.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1672096332",
+    "id" : "C78C1E0C",
+    "lastKnownWriteTime" : 1455335623,
+    "path" : "~/Documents/Belajar/Data Science/regression/courseproject.Rmd",
+    "project_path" : "courseproject.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}
