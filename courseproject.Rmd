@@ -51,14 +51,19 @@ amformpg
 
 Now we can see that from miles per gallon (mpg) automatic seems to be the more gas guzzling compared to manual. Hence, manual is better compared to automatic regarding mpg.
 
+Ok, this gives us a general idea, we need to look at the correlation table to see how it actually correlates, for this we need to convert the factors back to numeric for the `cor()` function to read.
+
 ```{r}
 
 mtcars$vs=as.numeric(mtcars$vs)
-
+-
 mtcars$am=as.numeric(mtcars$am)
 
 cor(mtcars)
 ```
+So, now that we have proof on our assumption, we need to fit a reggression model to the correlation.
+
+By the looks of of the correlation table there are some outstanding numbers, remember we are just looking for mpg difference for
 
 
 
