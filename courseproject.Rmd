@@ -26,18 +26,13 @@ The vs and am are not supposed to be numeric, since they are actually codes for 
 Lets fix that
 
 ```{r}
-mtcars$vs=sub("0","V",mtcars$vs)
-mtcars$vs=sub("1","S",mtcars$vs)
-
-mtcars$am=sub("0","automatic",mtcars$am)
-mtcars$am=sub("1","manual",mtcars$am)
-
-mtcars$vs=as.factor(mtcars$vs)
-mtcars$am=as.factor(mtcars$am)
+mtcars = mtcars %>%
+  mutate(vs = ifelse(vs == "0","V","S"),am = ifelse(am == "0","automatic","manual")) %>%
+  mutate(vs = factor(vs,levels=c("V","S")),am = factor(am,levels = c("automatic","manual")))
 ```
 
 ```{r}
-summary(mtcars)
+summary(mtcars)[,8:9]
 ```
 
 ok, now we need to answer the question *Is an automatic or manual transmission better for MPG?*, to do this we can explore this by plotting the mpg with the transmission type.
@@ -46,15 +41,28 @@ ok, now we need to answer the question *Is an automatic or manual transmission b
 amformpg
 ```
 
-Now we can see that from miles per gallon (mpg) automatic seems to be the more gas guzzling compared to manual. Hence, manual is better compared to automatic regarding mpg.
+Now we can see that from miles per gallon (mpg) automatic seems to be the more gas guzzling compared to manual. Hence, manual is seemingly better compared to automatic regarding mpg.
 
 Ok, this gives us a general idea, we need to look at the correlation table to see how it actually correlates, for this we need to convert the factors back to numeric for the `cor()` function to read.
 
-```{r}
-cor_num
+```{r, echo=FALSE}
+rbind(dimnames(cor_num)[[1]],cor_num[1:11])
 ```
-By the looks of of the correlation table there are some outstanding numbers, by the correlations alone we would guess the best predictor is 
+By the looks of of the correlation table there are some outstanding numbers for the mpg correlations, we can figure that:
 
+1. The lower the cylinder number the better its mpg.
+2. The lower the displacement the better its mpg.
+3. The lower the horse power the better its mpg.
+4. The lower the weight the better its mpg.
+
+automatic:
+``` {r, echo=FALSE}
+summary(filter(mtcars,am == "automatic"))
+```
+manual:
+``` {r, echo=FALSE}
+summary(filter(mtcars,am == "manual"))
+```
 So, now that we have proof on our assumption, we need to fit a reggression model to the correlation.
 
 Pemember, we are just looking for mpg difference for automatic and manual (am), so we should build a basemodel that models the relation between those two variables. Here, we name them `basemodel` with `lm(mpg ~ am, data=mtcars)` as the model. 
