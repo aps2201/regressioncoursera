@@ -2,7 +2,7 @@
 title: "Regression Models Course Project"
 author: "aps2201"
 date: "February 13, 2016"
-output: html_document
+output: pdf_document
 ---
 
 ```{r,include=FALSE}
