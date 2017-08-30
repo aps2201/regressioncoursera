@@ -43,9 +43,6 @@ summary(mtcars)
 ok, now we need to answer the question *Is an automatic or manual transmission better for MPG?*, to do this we can explore this by plotting the mpg with the transmission type.
 
 ```{r}
-amformpg=ggplot(aes(x=am,y=mpg),data=mtcars)+
-  geom_boxplot(aes(fill=am))+
-  xlab("automatic/manual")
 amformpg
 ```
 
