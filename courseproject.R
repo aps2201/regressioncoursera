@@ -19,16 +19,15 @@ mtcars$am=factor(mtcars$am,levels = c("automatic","manual"))
 # correlations
 mtcars$vs=as.numeric(mtcars$vs)
 mtcars$am=as.numeric(mtcars$am)
-cor(mtcars)
+cor_num = cor(mtcars)
 
 #plot a/m
 amformpg=ggplot(aes(x=am,y=mpg),data=mtcars)+
   geom_boxplot(aes(fill=am))+
   xlab("automatic/manual")
-amformpg
+
 
 # models
-lm(mpg ~ am, data=mtcars)
-
-initialmodel <- lm(mpg ~ ., data = mtcars)
-bestmodel <- step(initialmodel, direction = "both")
+initialmodel = lm(mpg ~ ., data = mtcars)
+bestmodel = step(initialmodel, direction = "both")
+basemodel = lm(mpg ~ am, data = mtcars)

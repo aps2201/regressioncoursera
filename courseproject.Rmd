@@ -51,24 +51,25 @@ Now we can see that from miles per gallon (mpg) automatic seems to be the more g
 Ok, this gives us a general idea, we need to look at the correlation table to see how it actually correlates, for this we need to convert the factors back to numeric for the `cor()` function to read.
 
 ```{r}
-
-mtcars$vs=as.numeric(mtcars$vs)
-
-mtcars$am=as.numeric(mtcars$am)
-
-cor(mtcars)
+cor_num
 ```
+By the looks of of the correlation table there are some outstanding numbers, by the correlations alone we would guess the best predictor is 
+
 So, now that we have proof on our assumption, we need to fit a reggression model to the correlation.
 
-By the looks of of the correlation table there are some outstanding numbers, remember we are just looking for mpg difference for automatic and manual.
+Pemember, we are just looking for mpg difference for automatic and manual (am), so we should build a basemodel that models the relation between those two variables. Here, we name them `basemodel` with `lm(mpg ~ am, data=mtcars)` as the model. 
 
+This is what it looks like:
 ```{r}
-initialmodel <- lm(mpg ~ ., data = mtcars)
-bestmodel <- step(initialmodel, direction = "both")
+basemodel
 ```
 
 ```{r}
-basemodel <- lm(mpg ~ am, data = mtcars)
+initialmodel
+bestmodel
+```
+
+```{r}
 anova(basemodel, bestmodel)
 ```
 
